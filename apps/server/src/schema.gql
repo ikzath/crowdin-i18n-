@@ -1,0 +1,189 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type ArchivePayload {
+  success: Boolean!
+}
+
+input CreateMemberInput {
+  owner: Boolean!
+  sortOrder: Float!
+  userId: String!
+  workspaceId: String!
+}
+
+input CreateTemplateInput {
+  createdAt: DateTime
+  name: String
+  updatedAt: DateTime
+}
+
+input CreateTenantInput {
+  name: String!
+}
+
+input CreateWorkspaceInput {
+  name: String!
+  tenantId: String!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON
+
+input LoginUserInput {
+  email: String!
+  password: String!
+}
+
+type LoginUserPayload {
+  accessToken: String!
+  refreshToken: String!
+  user: User!
+}
+
+type Member {
+  id: String!
+}
+
+type Mutation {
+  addParagraph(paragraph: ParagraphInput!): Paragraph!
+  login(input: LoginUserInput!): LoginUserPayload!
+  refreshToken(input: RefreshTokenInput!): RefreshTokenPayload!
+  register(input: RegisterUserInput!): RegisterUserPayload!
+  removeMember(id: Int!): Member!
+  templateArchive(id: String!): ArchivePayload!
+  templateCreate(createTemplateInput: CreateTemplateInput!): Template!
+  tenantCreate(createTenantInput: CreateTenantInput!): Tenant!
+  tenantDelete(id: String!): Tenant!
+  tenantUpdate(updateTenantInput: UpdateTenantInput!): Tenant!
+  updateMember(updateMemberInput: UpdateMemberInput!): Member!
+  workspaceCreate(createWorkspaceInput: CreateWorkspaceInput!): Workspace!
+  workspaceDelete(id: String!): Workspace!
+  workspaceMembershipCreate(createMemberInput: CreateMemberInput!): Member!
+  workspaceUpdate(updateWorkspaceInput: UpdateWorkspaceInput!): Workspace!
+}
+
+type Paragraph {
+  alignment: String
+  function: String
+  id: String!
+  indentation: Float
+  options: JSON
+  order: Float!
+  rules: [String!]
+  runs: [JSON!]
+  style: String
+  templateId: String!
+  type: String
+}
+
+input ParagraphInput {
+  alignment: String
+  function: String
+  indentation: Float
+  options: JSON
+  rules: [String!]
+  runs: [JSON!]
+  style: String
+  templateId: String!
+  type: String!
+}
+
+type Query {
+  member(id: Int!): Member!
+  members: [Member!]!
+  paragraphs(templateId: String!): [Paragraph!]
+  template(id: String!): Template
+
+  """Get all templates"""
+  templates: [Template!]!
+  tenant(id: String!): Tenant!
+  tenants: [Tenant!]!
+  workspace(id: String!): Workspace!
+  workspaces: [Workspace!]!
+}
+
+input RefreshTokenInput {
+  refreshToken: String!
+}
+
+type RefreshTokenPayload {
+  accessToken: String!
+  user: User!
+}
+
+input RegisterUserInput {
+  email: String!
+  password: String!
+}
+
+type RegisterUserPayload {
+  accessToken: String!
+  refreshToken: String!
+  user: User!
+}
+
+type Template {
+  archived: Boolean!
+  createdAt: DateTime!
+  data: data!
+  id: String!
+  name: String!
+  options: TemplateOptions
+  updatedAt: DateTime!
+}
+
+type TemplateOptions {
+  languages: [String!]!
+  multiLingual: Boolean!
+}
+
+type Tenant {
+  id: String!
+  name: String!
+}
+
+input UpdateMemberInput {
+  id: Int!
+  owner: Boolean
+  sortOrder: Float
+  userId: String
+  workspaceId: String
+}
+
+input UpdateTenantInput {
+  id: String!
+  name: String
+}
+
+input UpdateWorkspaceInput {
+  id: Int!
+  name: String
+  tenantId: String
+}
+
+type User {
+  email: String!
+  firstName: String
+  id: String!
+  lastName: String
+}
+
+type Workspace {
+  id: String!
+  name: String!
+}
+
+type data {
+  content: JSON!
+  id: String!
+  name: String!
+}

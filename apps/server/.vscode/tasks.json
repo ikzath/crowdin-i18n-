@@ -1,0 +1,28 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "type": "npm",
+      "script": "start:debug",
+      "group": "rebuild",
+      "problemMatcher": [],
+      "label": "npm: start:debug",
+      "detail": "nest start --debug 9449 --watch",
+      "options": {
+        "env": {
+          "NODE_ENV": "development",
+          "MONGO_URL": "mongodb://localhost:27017",
+          "MONGO_NAME": "lawlift"
+        }
+      }
+    },
+    {
+      "type": "npm",
+      "script": "start:api",
+      "path": "/",
+      "problemMatcher": [],
+      "label": "npm: start:api",
+      "detail": "npx @compodoc/compodoc -p tsconfig.json -s"
+    }
+  ]
+}
