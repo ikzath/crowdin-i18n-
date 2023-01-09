@@ -390,7 +390,10 @@
   "projects": [
     {
       "packageName": "server",
-      "projectFolder": "apps/server"
+      "projectFolder": "apps/server",
+      "reviewCategory": "production",
+      // "cyclicDependencyProjects": ["client"]
+      "shouldPublish": false
     }
     //   /**
     //    * The NPM package name of the project (must match package.json)
