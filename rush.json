@@ -392,7 +392,12 @@
       "packageName": "server",
       "projectFolder": "apps/server",
       "reviewCategory": "production",
-      // "cyclicDependencyProjects": ["client"]
+      "shouldPublish": false
+    },
+    {
+      "packageName": "client",
+      "projectFolder": "apps/client",
+      "reviewCategory": "production",
       "shouldPublish": false
     }
     //   /**
