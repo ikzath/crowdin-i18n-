@@ -4,4 +4,10 @@ import { Field, ObjectType } from '@nestjs/graphql';
 export class MemberObject {
   @Field()
   readonly id: string;
+
+  @Field()
+  readonly owner: boolean;
+
+  @Field()
+  readonly role: string;
 }

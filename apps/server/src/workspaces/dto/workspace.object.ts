@@ -1,4 +1,4 @@
-import { ObjectType, Field, Int } from '@nestjs/graphql';
+import { ObjectType, Field } from '@nestjs/graphql';
 
 @ObjectType()
 export class Workspace {
@@ -7,4 +7,16 @@ export class Workspace {
 
   @Field()
   name: string;
+
+  @Field()
+  description: string;
+}
+
+@ObjectType()
+export class WorkspacePayload {
+  @Field()
+  workspace: Workspace;
+
+  @Field()
+  success: boolean;
 }

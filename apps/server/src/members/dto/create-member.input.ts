@@ -2,11 +2,14 @@ import { InputType, Field } from '@nestjs/graphql';
 
 @InputType()
 export class CreateMemberInput {
-  @Field()
-  owner: boolean;
+  @Field({ nullable: true })
+  owner?: boolean;
 
-  @Field()
-  sortOrder: number;
+  @Field({ nullable: true })
+  sortOrder?: number;
+
+  @Field({ nullable: true })
+  role?: string;
 
   @Field()
   workspaceId: string;

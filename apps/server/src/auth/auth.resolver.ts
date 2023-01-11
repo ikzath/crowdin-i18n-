@@ -26,6 +26,7 @@ export class AuthResolver {
     const accessToken = await this.authService.generateAccessToken(user);
     const refreshToken = await this.authService.generateRefreshToken(
       user,
+      //TODO how ti change to 30 days ?
       60 * 60 * 24 * 30,
     );
 

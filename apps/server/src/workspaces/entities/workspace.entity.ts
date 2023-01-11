@@ -2,14 +2,17 @@
  * MikroORM entity for template
  */
 import { Entity, Enum, ManyToOne, OneToMany, Property } from '@mikro-orm/core';
-import { BaseEntity } from 'src/database/entities/base-entity.entity';
+import { ExtendedBaseEntity } from 'src/database/entities/base-entity.entity';
 import { Member } from 'src/members/entities/member.entity';
 import { Tenant } from 'src/tenants/entities/tenant.entity';
 
 @Entity({ collection: 'workspaces' })
-export class Workspace extends BaseEntity {
+export class Workspace extends ExtendedBaseEntity {
   @Property()
   name: string;
+
+  @Property({ nullable: true })
+  description?: string;
 
   @Property()
   timezone = 'Europe/Berlin';
@@ -25,6 +28,6 @@ export class Workspace extends BaseEntity {
 }
 
 export enum Visibility {
-  PUBLIC = 'public',
-  PRIVATE = 'private',
+  PUBLIC = 'PUBLIC',
+  PRIVATE = 'PRIVATE',
 }

@@ -1,8 +1,15 @@
 /**
  * MikroORM entity for template
  */
-import { Embeddable, Embedded, Entity, Property } from '@mikro-orm/core';
-import { BaseEntity } from 'src/database/entities/base-entity.entity';
+import {
+  Embeddable,
+  Embedded,
+  Entity,
+  ManyToOne,
+  Property,
+} from '@mikro-orm/core';
+import { ExtendedBaseEntity } from 'src/database/entities/base-entity.entity';
+import { User } from 'src/users/entities/user.entity';
 
 @Embeddable()
 export class TemplateOptions {
@@ -12,7 +19,7 @@ export class TemplateOptions {
   languages: Array<string>;
 }
 @Entity({ collection: 'templates' })
-export class Template extends BaseEntity {
+export class Template extends ExtendedBaseEntity {
   @Property()
   name: string;
 
@@ -21,6 +28,12 @@ export class Template extends BaseEntity {
 
   @Property({ nullable: true })
   archived?: boolean;
+
+  @Property()
+  archivedAt: Date;
+
+  // @ManyToOne()
+  // archivedBy: User;
 
   @Property({ nullable: true })
   data?: object;

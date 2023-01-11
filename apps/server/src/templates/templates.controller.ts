@@ -40,11 +40,11 @@ export class TemplatesController {
    * @param createTemplateDto
    * @returns
    */
-  @Post()
-  @ApiOperation({ summary: 'Create a template' })
-  create(@Request() request, @Body() createTemplateDto: CreateTemplateDto) {
-    return this.templatesService.create(createTemplateDto);
-  }
+  // @Post()
+  // @ApiOperation({ summary: 'Create a template' })
+  // create(@Request() request, @Body() createTemplateDto: CreateTemplateDto) {
+  //   return this.templatesService.create(createTemplateDto);
+  // }
 
   @Get()
   @Throttle(10, 60)
@@ -69,7 +69,7 @@ export class TemplatesController {
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.templatesService.remove(+id);
+    return this.templatesService.remove(id);
   }
 
   @Post(':id/paragraphs')

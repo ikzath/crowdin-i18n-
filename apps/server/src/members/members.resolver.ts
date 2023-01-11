@@ -1,7 +1,8 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { MembersService } from './members.service';
 import { CreateMemberInput } from './dto/create-member.input';
 import { UpdateMemberInput } from './dto/update-member.input';
+import { MemberDeletePayload } from './dto/member.payload';
 import { MemberObject } from './dto/member.object';
 
 @Resolver(() => MemberObject)
@@ -21,7 +22,7 @@ export class MembersResolver {
   }
 
   @Query(() => MemberObject, { name: 'member' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
+  findOne(@Args('id', { type: () => String }) id: string) {
     return this.membersService.findOne(id);
   }
 
@@ -29,11 +30,19 @@ export class MembersResolver {
   updateMember(
     @Args('updateMemberInput') updateMemberInput: UpdateMemberInput,
   ) {
-    return this.membersService.update(updateMemberInput.id, updateMemberInput);
+    return this.membersService.update(updateMemberInput);
   }
 
-  @Mutation(() => MemberObject)
-  removeMember(@Args('id', { type: () => Int }) id: number) {
-    return this.membersService.remove(id);
+  // @Mutation(() => MemberArchivePayload, { name: 'workspaceMembershipArchive' })
+  // archiveMember(@Args('id', { type: () => String }) id: string) {
+  //   const member = this.membersService.archive(id);
+  //   // const member = this.membersService.findOne(id);
+  //   return { member, success: true };
+  // }
+
+  @Mutation(() => MemberDeletePayload, { name: 'workspaceMembershipDelete' })
+  removeMember(@Args('id', { type: () => String }) id: string) {
+    this.membersService.remove(id);
+    return { success: true };
   }
 }

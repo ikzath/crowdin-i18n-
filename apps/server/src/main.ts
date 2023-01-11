@@ -6,9 +6,10 @@ import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  const PORT = 4000;
+
   // TODO Configure apollo for helmet
   // app.use(helmet());
+  // TODO configure for GraphQL
   app.enableCors();
   // Terminate MikroORM connection on app shutdown
   app.enableShutdownHooks();
@@ -30,6 +31,6 @@ async function bootstrap() {
     swaggerOptions: { persistAuthorization: true },
   });
 
-  await app.listen(PORT);
+  await app.listen(process.env.PORT);
 }
 bootstrap();

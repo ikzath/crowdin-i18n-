@@ -1,10 +1,12 @@
 import {
   Entity,
+  ManyToOne,
   PrimaryKey,
   Property,
   SerializedPrimaryKey,
 } from '@mikro-orm/core';
 import { ObjectId } from '@mikro-orm/mongodb';
+import { User } from 'src/users/entities/user.entity';
 
 @Entity({ abstract: true })
 export abstract class BaseEntity {
@@ -19,4 +21,13 @@ export abstract class BaseEntity {
 
   @Property({ onUpdate: () => new Date() })
   updatedAt: Date = new Date();
+}
+
+@Entity({ abstract: true })
+export abstract class ExtendedBaseEntity extends BaseEntity {
+  @ManyToOne()
+  createdBy: User;
+
+  @ManyToOne()
+  updatedBy: User;
 }

@@ -1,6 +1,6 @@
 import { hash } from 'bcrypt';
 import { InjectRepository } from '@mikro-orm/nestjs';
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
@@ -18,24 +18,62 @@ export class UsersService {
     return user;
   }
 
-  findAll() {
-    return this.userRepository.findAll();
+  async findAll() {
+    return await this.userRepository.findAll();
   }
 
   async findOne(id: string): Promise<User | undefined> {
-    return this.userRepository.findOne(id);
+    const user = await this.userRepository.findOne(id);
+    if (!user) {
+      throw new Error('No such user');
+    }
+    return user;
   }
 
   async findOneByEmail(email: string): Promise<User | undefined> {
-    return await this.userRepository.findOne({ email });
+    const user = await this.userRepository.findOne({ email });
+    if (!user) {
+      throw new Error('No such user');
+    }
+    return user;
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  // Update user with email (must password be updated?)
+  // async update(updateUserDto: UpdateUserDto) {
+  //   const user = await this.userRepository.findOne(updateUserDto.id);
+  //   if (!user) {
+  //     return { message: 'No such user' };
+  //   }
+  //   user.email = updateUserDto.email;
+  //   try {
+  //     if (user) {
+  //       await this.userRepository.persistAndFlush(user);
+  //     }
+  //   } catch (error) {
+  //     throw new Error(error);
+  //   }
+  //   return user;
+  // }
+
+  suspend(id: number) {
+    return `This action suspends a #${id} user`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  archive(id: number) {
+    return `This action archives a #${id} user`;
+  }
+
+  async remove(id: string) {
+    const user = await this.userRepository.findOne(id);
+    if (!user) {
+      throw new NotFoundException('Http error - No such user found');
+    }
+    try {
+      await this.userRepository.removeAndFlush(user);
+    } catch (error) {
+      throw new NotFoundException('DB Error', error);
+    }
+    return user;
   }
 
   async createUser(createUserInput: Partial<User>) {

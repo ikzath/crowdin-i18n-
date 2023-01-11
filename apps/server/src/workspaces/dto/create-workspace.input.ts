@@ -7,4 +7,13 @@ export class CreateWorkspaceInput {
 
   @Field()
   name: string;
+
+  @Field({ nullable: true })
+  description?: string;
+
+  @Field({ nullable: true })
+  timezone?: string;
+
+  // @Field({ nullable: true })
+  // visibility?: string;
 }

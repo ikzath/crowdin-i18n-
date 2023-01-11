@@ -2,13 +2,14 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type ArchivePayload {
-  success: Boolean!
+input CreateIntegrationInput {
+  name: String!
 }
 
 input CreateMemberInput {
-  owner: Boolean!
-  sortOrder: Float!
+  owner: Boolean
+  role: String
+  sortOrder: Float
   userId: String!
   workspaceId: String!
 }
@@ -20,18 +21,26 @@ input CreateTemplateInput {
 }
 
 input CreateTenantInput {
-  name: String!
+  name: String
 }
 
 input CreateWorkspaceInput {
+  description: String
   name: String!
   tenantId: String!
+  timezone: String
 }
 
 """
 A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
 """
 scalar DateTime
+
+type Integration {
+  createdAt: DateTime!
+  name: String!
+  updatedAt: DateTime!
+}
 
 """
 The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
@@ -51,23 +60,26 @@ type LoginUserPayload {
 
 type Member {
   id: String!
+  owner: Boolean!
+  role: String!
 }
 
 type Mutation {
   addParagraph(paragraph: ParagraphInput!): Paragraph!
+  clientIntegrationCreate(createIntegrationInput: CreateIntegrationInput!): Integration!
   login(input: LoginUserInput!): LoginUserPayload!
   refreshToken(input: RefreshTokenInput!): RefreshTokenPayload!
   register(input: RegisterUserInput!): RegisterUserPayload!
-  removeMember(id: Int!): Member!
-  templateArchive(id: String!): ArchivePayload!
-  templateCreate(createTemplateInput: CreateTemplateInput!): Template!
+  templateArchive(id: String!): TemplateArchivePayload!
+  templateCreate(createTemplateInput: CreateTemplateInput!): TemplatePayload!
   tenantCreate(createTenantInput: CreateTenantInput!): Tenant!
   tenantDelete(id: String!): Tenant!
   tenantUpdate(updateTenantInput: UpdateTenantInput!): Tenant!
   updateMember(updateMemberInput: UpdateMemberInput!): Member!
   workspaceCreate(createWorkspaceInput: CreateWorkspaceInput!): Workspace!
-  workspaceDelete(id: String!): Workspace!
+  workspaceDelete(id: String!): WorkspacePayload!
   workspaceMembershipCreate(createMemberInput: CreateMemberInput!): Member!
+  workspaceMembershipDelete(id: String!): deleteMemberPayload!
   workspaceUpdate(updateWorkspaceInput: UpdateWorkspaceInput!): Workspace!
 }
 
@@ -98,7 +110,9 @@ input ParagraphInput {
 }
 
 type Query {
-  member(id: Int!): Member!
+  getTest: String!
+  integrations: [Integration!]!
+  member(id: String!): Member!
   members: [Member!]!
   paragraphs(templateId: String!): [Paragraph!]
   template(id: String!): Template
@@ -141,9 +155,19 @@ type Template {
   updatedAt: DateTime!
 }
 
+type TemplateArchivePayload {
+  success: Boolean!
+  template: Template!
+}
+
 type TemplateOptions {
   languages: [String!]!
   multiLingual: Boolean!
+}
+
+type TemplatePayload {
+  success: String!
+  template: Template!
 }
 
 type Tenant {
@@ -152,8 +176,9 @@ type Tenant {
 }
 
 input UpdateMemberInput {
-  id: Int!
+  id: String!
   owner: Boolean
+  role: String
   sortOrder: Float
   userId: String
   workspaceId: String
@@ -165,9 +190,10 @@ input UpdateTenantInput {
 }
 
 input UpdateWorkspaceInput {
-  id: Int!
+  description: String
+  id: String!
   name: String
-  tenantId: String
+  timezone: String
 }
 
 type User {
@@ -178,12 +204,22 @@ type User {
 }
 
 type Workspace {
+  description: String!
   id: String!
   name: String!
+}
+
+type WorkspacePayload {
+  success: Boolean!
+  workspace: Workspace!
 }
 
 type data {
   content: JSON!
   id: String!
   name: String!
+}
+
+type deleteMemberPayload {
+  success: Boolean!
 }
