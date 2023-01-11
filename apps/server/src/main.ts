@@ -6,7 +6,7 @@ import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-
+  const PORT = 4000;
   // TODO Configure apollo for helmet
   // app.use(helmet());
   app.enableCors();
@@ -30,6 +30,6 @@ async function bootstrap() {
     swaggerOptions: { persistAuthorization: true },
   });
 
-  await app.listen(process.env.PORT);
+  await app.listen(PORT);
 }
 bootstrap();

@@ -1,15 +1,16 @@
 {
-  "name": "client",
+  "name": "web-app",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "start": "vite",
     "build": "vue-tsc && vite build",
     "preview": "vite preview"
   },
   "dependencies": {
-    "vue": "^3.2.45"
+    "vue": "^3.2.45",
+    "vue-i18n": "9"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.0.0",

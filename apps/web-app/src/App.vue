@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
+import HelloWorld from "./components/HelloWorld.vue";
+import I18n from "./components/i18n.vue";
 </script>
 
 <template>
@@ -12,6 +13,8 @@ import HelloWorld from './components/HelloWorld.vue'
     </a>
   </div>
   <HelloWorld msg="Vite + Vue" />
+  <!-- <I18n> {{ $t("hello") }}</I18n> -->
+  <I18n>Hello</I18n>
 </template>
 
 <style scoped>

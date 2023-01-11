@@ -1,0 +1,10 @@
+{
+  "message": "嗨 i18n !!",
+  "article": {
+    "title": "快速上手",
+    "info": "Vue I18n 是 Vue.js 的多語系插件"
+  },
+  "EN": "英",
+  "ZH": "中",
+  "logo": "商標"
+}

@@ -395,8 +395,8 @@
       "shouldPublish": false
     },
     {
-      "packageName": "client",
-      "projectFolder": "apps/client",
+      "packageName": "web-app",
+      "projectFolder": "apps/web-app",
       "reviewCategory": "production",
       "shouldPublish": false
     }
