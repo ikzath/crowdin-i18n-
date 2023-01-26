@@ -2,22 +2,18 @@
 
 <script lang="ts" setup>
 import { onMounted, ref, getCurrentInstance, useSlots } from "vue";
-// import { useI18n } from "../composables/useI18n.js";
-import { useI18n } from "vue-i18n";
+import { i18nBase } from "./i18n";
 
-const { t } = useI18n();
 const slots: any = useSlots();
 const instance = getCurrentInstance();
 
-const getSlot = slots.default()[0].children;
+const getSlot = slots.default()[0].children?.trim().replace(/\n/g, "");
 console.log(getSlot);
 
-const result = ref(t(getSlot));
-console.log(result.value);
+const result = ref(i18nBase(getSlot));
 
-// onMounted(() => {
-//   console.log(instance);
-// });
+// const result = ref(t(getSlot));
+// console.log(result.value);
 </script>
 
 <style scoped>

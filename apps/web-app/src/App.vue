@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import HelloWorld from "./components/HelloWorld.vue";
-import I18n from "./components/i18n.vue";
+import I18n from "./components/i18n/i18n.vue";
 </script>
 
 <template>
@@ -12,9 +12,9 @@ import I18n from "./components/i18n.vue";
       <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
     </a>
   </div>
-  <HelloWorld msg="Vite + Vue" />
+  <HelloWorld>welcome </HelloWorld>
   <!-- <I18n> {{ $t("hello") }}</I18n> -->
-  <I18n>Hello</I18n>
+  <I18n message="my message" plural="count" vars="{msg: 1}">hello</I18n>
 </template>
 
 <style scoped>

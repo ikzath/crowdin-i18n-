@@ -1,14 +1,14 @@
-<script setup lang="ts">
-import { ref } from "vue";
-
-defineProps<{ msg: string }>();
-
-const count = ref(0);
-</script>
-
 <template>
-  <h1>{{ msg }}</h1>
+  <h1>Vite + Vue</h1>
 </template>
+
+<script setup lang="ts">
+import { ref, useSlots } from "vue";
+import { useI18n } from "vue-i18n";
+
+const slots: any = useSlots();
+const getSlot = slots.default()[0].children?.trim().replace(/\n/g, "");
+</script>
 
 <style scoped>
 .read-the-docs {

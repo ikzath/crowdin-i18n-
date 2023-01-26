@@ -1,5 +1,4 @@
 import { TsMorphMetadataProvider } from '@mikro-orm/reflection';
-import { MailerModule } from '@nestjs-modules/mailer';
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -16,19 +15,22 @@ import { join } from 'path';
 import { TenantsModule } from './tenants/tenants.module';
 import { WorkspacesModule } from './workspaces/workspaces.module';
 import { MembersModule } from './members/members.module';
-import { EmailModule } from './email/email.module';
-import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
-import { MailerService } from './mailer/mailer.service';
-import { IntegrationModule } from './integration/integration.module';
-import { GraphQLError, GraphQLFormattedError } from 'graphql';
-import { DbTestModule } from './db-test/db-test.module';
 
 const Throttler = ThrottlerModule.forRoot({
   // ttl: 60,
   // limit: 1,
 });
 
-const MikroORM = MikroOrmModule.forRoot();
+const MikroORM = MikroOrmModule.forRoot({
+  entities: ['dist/**/*.entity.js'],
+  entitiesTs: ['src/**/*.entity.ts'],
+  clientUrl: process.env.MONGO_URL || 'mongodb://localhost:27017',
+  // 'mongodb+srv://lawlift:FnRr9UIeNOBoeavi@cluster0.2gejh.mongodb.net/?retryWrites=true&w=majority',
+  type: 'mongo',
+  ensureIndexes: true,
+  dbName: process.env.MONGO_NAME || 'lawlift',
+  metadataProvider: TsMorphMetadataProvider,
+});
 
 const GraphQL = GraphQLModule.forRoot({
   driver: ApolloDriver,
@@ -36,47 +38,21 @@ const GraphQL = GraphQLModule.forRoot({
   // autoSchemaFile: true,
   sortSchema: true,
   resolvers: { JSON: GraphQLJSON },
-  // debug: false,
-  // formatError: (error: GraphQLError) => {
-  //   const graphQLFormattedError: GraphQLFormattedError = {
-  //     message: error?.message,
-  //   };
-  //   return graphQLFormattedError;
-  // },
-});
-
-const Mailer = MailerModule.forRoot({
-  transport: {
-    host: 'smtp.sendgrid.net',
-    auth: {
-      user: 'apikey',
-      pass: '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',
-    },
-  },
-  template: {
-    dir: join(__dirname, 'mails'),
-    adapter: new HandlebarsAdapter(), // or new PugAdapter() or new EjsAdapter()
-  },
 });
 @Module({
   imports: [
     Throttler,
     MikroORM,
     GraphQL,
-    Mailer,
     UsersModule,
     TemplatesModule,
     AuthModule,
     TenantsModule,
     WorkspacesModule,
     MembersModule,
-    EmailModule,
-    MailerModule,
-    IntegrationModule,
-    DbTestModule,
   ],
   controllers: [AppController],
-  providers: [AppService, MailerService],
+  providers: [AppService],
   // providers: [AppService, { provide: APP_GUARD, useClass: ThrottlerGuard }],
 })
 export class AppModule {}

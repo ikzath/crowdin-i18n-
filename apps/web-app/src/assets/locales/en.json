@@ -1,10 +1,4 @@
 {
-  "message": "hello i18n !!",
-  "article": {
-    "title": "Get Started",
-    "info": "Vue I18n is internationalization plugin for Vue.js"
-  },
-  "EN": "EN",
-  "ZH": "ZH",
-  "logo": "logo"
+  "hello": "Hello World",
+  "welcome": "Welcome to the world of tomorrow"
 }
